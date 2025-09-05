@@ -1,0 +1,33 @@
+{
+    "name": "leafs/cache",
+    "description": "Leaf PHP cache module",
+    "keywords": [
+        "cache",
+        "leafphp"
+    ],
+    "homepage": "https://leafphp.dev/docs/utils/cache",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Michael Darko",
+            "email": "mickdd22@gmail.com",
+            "homepage": "https://mychi.netlify.app",
+            "role": "Developer"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Leaf\\": "src"
+        },
+        "files": [
+            "src/functions.php"
+        ]
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "require": {
+        "illuminate/cache": "*",
+        "illuminate/support": "*"
+    }
+}
