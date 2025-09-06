@@ -47,3 +47,16 @@ $value = cache(
     },
 );
 ```
+
+Unlike other frameworks, the cache function will always return the cached value if it exists, meaning that the closure will only be executed if the cache key does not exist. So you don't need to check if the value exists before calling the cache function.
+
+## Extended Usage
+
+The cache module is built on top of the Illuminate Cache component, so you can use all the features of that component. To do that, you can call the `cache()` function without any parameters to get the cache repository instance:
+
+```php
+cache()->put('key', 'value', 600); // cache for 10 minutes
+$value = cache()->get('key');
+```
+
+For most use cases, the `cache()` function is sufficient, but if you need more control, you can use the cache repository instance directly.
