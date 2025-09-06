@@ -60,3 +60,13 @@ $value = cache()->get('key');
 ```
 
 For most use cases, the `cache()` function is sufficient, but if you need more control, you can use the cache repository instance directly.
+
+You can use this to manually overwrite a cache key:
+
+```php
+// will not set the cache if it already exists
+cache('key', 600, 'new value'); // cache for 10 minutes
+
+// will always set the cache, even if it already exists
+cache()->put('key', 'new value', 600); // cache for 10 minutes
+```
