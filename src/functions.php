@@ -17,14 +17,19 @@ if (!function_exists('cache')) {
             });
         }
 
-        $store = \Leaf\Config::get('cache');
+        /** @var \Leaf\Cache */
+        $cache = \Leaf\Config::get('cache');
 
         if ($key === null) {
-            return $store;
+            return $cache->store();
         }
 
         if ($ttl === null) {
-            return $store->get($key);
+            return $cache->store()->get($key);
+        }
+
+        if ($cache->store()->has($key)) {
+            return $cache->store()->get($key);
         }
 
         if ($value === null) {
@@ -36,7 +41,7 @@ if (!function_exists('cache')) {
             $value = $value();
         }
 
-        $store->put($key, $value, $ttl);
+        $cache->store()->put($key, $value, $ttl);
 
         return $value;
     }
