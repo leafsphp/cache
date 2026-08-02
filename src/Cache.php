@@ -30,7 +30,9 @@ class Cache
      */
     public function init(array $config = [])
     {
-        $defaultStorePath = function_exists('StoragePath') ? StoragePath('framework/cache') : '/cache';
+        $defaultStorePath = function_exists('StoragePath')
+            ? StoragePath('framework/cache')
+            : getcwd() . '/storage/framework/cache';
 
         $mvcConfig = function_exists('MvcConfig') ? MvcConfig('cache') ?? [] : [];
         $config = array_merge([
@@ -44,10 +46,10 @@ class Cache
             'prefix' => 'leaf_cache',
         ], $mvcConfig, $config);
 
-        $container = new Container;
+        $container = new Container();
 
         $container->singleton('files', function () {
-            return new Filesystem;
+            return new Filesystem();
         });
 
         $container->instance('config', new Config([
@@ -59,10 +61,17 @@ class Cache
         });
 
         $this->store = $container;
-        $this->repository = new Repository(new FileStore(
-            $this->store->make('files'),
-            $this->store['config']['cache.stores.file']['path']
-        ));
+
+        try {
+            $this->repository = $this->store->make('cache')->store($config['default'] ?? 'file');
+        } catch (\Throwable $th) {
+            $filePath = $config['stores']['file']['path'] ?? $defaultStorePath;
+
+            $this->repository = new Repository(new FileStore(
+                $this->store->make('files'),
+                $filePath,
+            ));
+        }
 
         return $this;
     }

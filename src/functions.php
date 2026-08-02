@@ -25,7 +25,13 @@ if (!function_exists('cache')) {
         }
 
         if ($ttl === null) {
-            return $cache->store()->get($key);
+            $cached = $cache->store()->get($key);
+
+            if ($cached === null && function_exists('crash')) {
+                crash()->leaveCrumb("cache miss: $key", 'cache', [], false);
+            }
+
+            return $cached;
         }
 
         if ($cache->store()->has($key)) {
@@ -37,11 +43,15 @@ if (!function_exists('cache')) {
             $ttl = null;
         }
 
-        if (is_callable($value)) {
+        if ($value instanceof \Closure) {
             $value = $value();
         }
 
         $cache->store()->put($key, $value, $ttl);
+
+        if (function_exists('crash')) {
+            crash()->leaveCrumb("cache write: $key", 'cache', [], false);
+        }
 
         return $value;
     }
