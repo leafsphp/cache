@@ -32,12 +32,12 @@
         "illuminate/support": "*",
         "illuminate/filesystem": "*",
         "illuminate/config": "*",
-        "illuminate/container": "*",
-        "leafs/alchemy": "v5.x-dev"
+        "illuminate/container": "*"
     },
     "require-dev": {
         "pestphp/pest": "*",
-        "friendsofphp/php-cs-fixer": "*"
+        "friendsofphp/php-cs-fixer": "*",
+        "leafs/alchemy": "v5.x-dev"
     },
     "config": {
         "allow-plugins": {
