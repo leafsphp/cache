@@ -90,10 +90,10 @@ test('values expire after their ttl', function () {
         'stores' => ['file' => ['driver' => 'file', 'path' => $this->tmpDir]],
     ])->store();
 
-    $store->put('short-lived', 'value', 1);
+    $store->put('short-lived', 'value', 2);
     expect($store->get('short-lived'))->toBe('value');
 
-    sleep(2);
+    sleep(3);
 
     expect($store->get('short-lived'))->toBeNull();
 });
